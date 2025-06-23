@@ -1,4 +1,4 @@
-name: AWS Lambda CD
+name: AWS Lambda CD by Ishita
 
 on:
   push:
