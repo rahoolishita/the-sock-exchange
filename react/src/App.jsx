@@ -18,10 +18,12 @@ import AddSock from "./components/AddSock";
 
 function App() {
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(1); // State to store the current page number
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(import.meta.env.VITE_SOCKS_API_URL);
+        const response = await fetch(`${import.meta.env.VITE_SOCKS_API_URL}/${page}/10`);
         if (!response.ok) {
           throw new Error('Data could not be fetched!');
         }
@@ -33,7 +35,7 @@ function App() {
     };
 
     fetchData();
-  }, []);
+  }, [page]);
 
   const handleDelete = async (sockId) => {
     try {
@@ -90,7 +92,7 @@ function App() {
               <Featured data={promo_data} />
               <hr />
               <Routes>
-                <Route exact path="/" element={<Home data={data} handleDelete={handleDelete} />} />
+                <Route exact path="/" element={<Home data={data} handleDelete={handleDelete} page={page} setPage={setPage} />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/add" element={<AddSock />} />
               </Routes>
